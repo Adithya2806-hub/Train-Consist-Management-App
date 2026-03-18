@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class TrainConsistAppUC1 {
 
     public static void main(String[] args) {
 
@@ -9,7 +9,7 @@ public class Main {
         System.out.println("=== Train Consist Management App ===");
         System.out.println("====================================");
 
-        // Initialize empty list
+        // Initialize empty train consist
         List<String> trainConsist = new ArrayList<>();
 
         System.out.println("\nInitializing train consist...");
