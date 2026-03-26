@@ -1,5 +1,5 @@
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 // Bogie class
 class Bogie {
@@ -11,10 +11,6 @@ class Bogie {
         this.capacity = capacity;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int getCapacity() {
         return capacity;
     }
@@ -22,10 +18,11 @@ class Bogie {
 
 public class TrainConsistManagementApp {
 
-    // Method for grouping (important for test cases)
-    public static Map<String, List<Bogie>> groupBogies(List<Bogie> bogies) {
+    // Method for total seats (used in test cases)
+    public static int getTotalSeats(List<Bogie> bogies) {
         return bogies.stream()
-                .collect(Collectors.groupingBy(Bogie::getName));
+                .map(Bogie::getCapacity)
+                .reduce(0, Integer::sum);
     }
 
     public static void main(String[] args) {
@@ -37,21 +34,13 @@ public class TrainConsistManagementApp {
         List<Bogie> bogies = new ArrayList<>();
 
         bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("Sleeper", 70));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 24));
 
-        Map<String, List<Bogie>> grouped = groupBogies(bogies);
+        int totalSeats = getTotalSeats(bogies);
 
-        System.out.println("\nGrouped Bogies:");
+        System.out.println("\nTotal Seating Capacity: " + totalSeats);
 
-        for (String key : grouped.keySet()) {
-            System.out.println("\n" + key + ":");
-            for (Bogie b : grouped.get(key)) {
-                System.out.println("  → " + b.getCapacity());
-            }
-        }
-
-        System.out.println("\nUC9 Completed Successfully!");
+        System.out.println("\nUC10 Completed Successfully!");
     }
 }
