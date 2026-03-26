@@ -1,28 +1,19 @@
-import java.util.*;
-import java.util.stream.*;
+import java.util.regex.*;
 
-// Bogie class
-class Bogie {
-    String name;
-    int capacity;
-
-    public Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-}
-
+// Same class name (as you asked)
 public class TrainConsistManagementApp {
 
-    // Method for total seats (used in test cases)
-    public static int getTotalSeats(List<Bogie> bogies) {
-        return bogies.stream()
-                .map(Bogie::getCapacity)
-                .reduce(0, Integer::sum);
+    // Regex patterns
+    private static final String TRAIN_ID_REGEX = "TRN-\\d{4}";
+    private static final String CARGO_CODE_REGEX = "PET-[A-Z]{2}";
+
+    // Validation methods (used in test cases)
+    public static boolean isValidTrainId(String trainId) {
+        return Pattern.matches(TRAIN_ID_REGEX, trainId);
+    }
+
+    public static boolean isValidCargoCode(String cargoCode) {
+        return Pattern.matches(CARGO_CODE_REGEX, cargoCode);
     }
 
     public static void main(String[] args) {
@@ -31,16 +22,17 @@ public class TrainConsistManagementApp {
         System.out.println("=== Train Consist Management App ===");
         System.out.println("====================================");
 
-        List<Bogie> bogies = new ArrayList<>();
+        // Sample Inputs
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
+        // Validation
+        boolean trainValid = isValidTrainId(trainId);
+        boolean cargoValid = isValidCargoCode(cargoCode);
 
-        int totalSeats = getTotalSeats(bogies);
+        System.out.println("\nTrain ID: " + trainId + " → " + (trainValid ? "Valid" : "Invalid"));
+        System.out.println("Cargo Code: " + cargoCode + " → " + (cargoValid ? "Valid" : "Invalid"));
 
-        System.out.println("\nTotal Seating Capacity: " + totalSeats);
-
-        System.out.println("\nUC10 Completed Successfully!");
+        System.out.println("\nUC11 Completed Successfully!");
     }
 }
