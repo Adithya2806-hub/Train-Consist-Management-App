@@ -1,19 +1,34 @@
-import java.util.regex.*;
+import java.util.*;
+import java.util.stream.*;
 
-// Same class name (as you asked)
-public class TrainConsistManagementApp {
+// Goods Bogie class
+class GoodsBogie {
+    String type;   // Cylindrical, Open, Box
+    String cargo;  // Petroleum, Coal, Grain
 
-    // Regex patterns
-    private static final String TRAIN_ID_REGEX = "TRN-\\d{4}";
-    private static final String CARGO_CODE_REGEX = "PET-[A-Z]{2}";
-
-    // Validation methods (used in test cases)
-    public static boolean isValidTrainId(String trainId) {
-        return Pattern.matches(TRAIN_ID_REGEX, trainId);
+    public GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
     }
 
-    public static boolean isValidCargoCode(String cargoCode) {
-        return Pattern.matches(CARGO_CODE_REGEX, cargoCode);
+    public String getType() {
+        return type;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+}
+
+public class TrainConsistManagementApp {
+
+    // Method used for test cases
+    public static boolean isTrainSafe(List<GoodsBogie> bogies) {
+        return bogies.stream()
+                .allMatch(b ->
+                        !b.getType().equalsIgnoreCase("Cylindrical")
+                                || b.getCargo().equalsIgnoreCase("Petroleum")
+                );
     }
 
     public static void main(String[] args) {
@@ -22,17 +37,16 @@ public class TrainConsistManagementApp {
         System.out.println("=== Train Consist Management App ===");
         System.out.println("====================================");
 
-        // Sample Inputs
-        String trainId = "TRN-1234";
-        String cargoCode = "PET-AB";
+        List<GoodsBogie> bogies = new ArrayList<>();
 
-        // Validation
-        boolean trainValid = isValidTrainId(trainId);
-        boolean cargoValid = isValidCargoCode(cargoCode);
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Open", "Coal"));
+        bogies.add(new GoodsBogie("Box", "Grain"));
 
-        System.out.println("\nTrain ID: " + trainId + " → " + (trainValid ? "Valid" : "Invalid"));
-        System.out.println("Cargo Code: " + cargoCode + " → " + (cargoValid ? "Valid" : "Invalid"));
+        boolean isSafe = isTrainSafe(bogies);
 
-        System.out.println("\nUC11 Completed Successfully!");
+        System.out.println("\nTrain Safety Status: " + (isSafe ? "SAFE ✅" : "UNSAFE ❌"));
+
+        System.out.println("\nUC12 Completed Successfully!");
     }
 }
